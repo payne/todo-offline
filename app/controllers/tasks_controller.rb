@@ -1,4 +1,5 @@
 class TasksController < ApplicationController
+  #respond_to :html, :json
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
   # GET /tasks
@@ -14,11 +15,15 @@ class TasksController < ApplicationController
 
   # GET /tasks/new
   def new
+    # Added this so the edit view can show all the tasks...
+    @tasks = Task.all
     @task = Task.new
   end
 
   # GET /tasks/1/edit
   def edit
+    # Added this so the edit view can show all the tasks...
+    @tasks = Task.all
   end
 
   # POST /tasks
@@ -28,6 +33,7 @@ class TasksController < ApplicationController
 
     respond_to do |format|
       if @task.save
+        #TODO:MGP: ASK ABOUT THIS: Why does redirect_to end up in the show.html.erb?
         format.html { redirect_to @task, notice: 'Task was successfully created.' }
         format.json { render action: 'show', status: :created, location: @task }
       else
